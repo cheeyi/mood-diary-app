@@ -12,7 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface EntryViewController () <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
-
+#pragma mark - Initialization and boilerplate code
 @property (strong,nonatomic) NSString *location;
 @property (strong,nonatomic) CLLocationManager *locationManager;
 @property (strong,nonatomic) UIImage *pickedImage;
@@ -34,7 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.locationManager requestWhenInUseAuthorization];
-    NSDate *date; // today's date
+    NSDate *date;
+    
     if (self.entry != nil) { // editing mode
         self.textView.text = self.entry.body;
         self.pickedMood = self.entry.mood;
@@ -53,6 +54,17 @@
     self.imageButton.layer.cornerRadius = CGRectGetWidth(self.imageButton.frame)/2.0f;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.textView becomeFirstResponder];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Core Location
 - (void)loadLocation {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -74,16 +86,7 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.textView becomeFirstResponder];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+#pragma mark - User/data interactions
 - (void)dismissSelf {
     // Dismiss this view controller
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -125,7 +128,7 @@
 /*-- Finished handling the TextView box --*/
 
 
-// Handle picture attachment
+#pragma mark - Handle picture attachment
 - (void)setPickedImage:(UIImage *)pickedImage {
     _pickedImage = pickedImage;
     
@@ -190,7 +193,7 @@
 /*-- Finished handling pictures --*/
 
 
-// Handle moods
+#pragma mark - Handle moods
 - (void) setPickedMood:(enum DiaryEntryMood)pickedMood {
     _pickedMood = pickedMood;
     
@@ -224,15 +227,5 @@
 - (IBAction)badPressed:(id)sender {
     self.pickedMood = DiaryEntryMoodBad;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

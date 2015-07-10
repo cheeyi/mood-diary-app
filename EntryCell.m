@@ -22,6 +22,8 @@
 
 @implementation EntryCell
 
+
+#pragma mark - Boilerplate code
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -32,6 +34,7 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Method implementations 
 // Dynamically calculate the height of the entry label
 +(CGFloat) heightForEntry: (DiaryEntry *)entry {
     const CGFloat topMargin = 35.0f;
@@ -62,6 +65,7 @@
     } else {
         self.mainImageView.image = [UIImage imageNamed:@"icn_noimage"];
     }
+    // Nice rounded circular edges around image
     self.mainImageView.layer.cornerRadius = CGRectGetWidth(self.mainImageView.frame)/2.0f;
     
     // Show mood if present

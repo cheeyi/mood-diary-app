@@ -9,6 +9,7 @@
 #import "CoreDataStack.h"
 
 @implementation CoreDataStack
+
 // read-only publicly, read-write privately
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
